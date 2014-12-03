@@ -10,13 +10,26 @@
 
 .. function:: set_timeout(callback, delay)
 
+   Runs the callback in the main thread after the given delay (in
+   milliseconds). Callbacks with an equal delay will be run in the order
+   they were added.
+
 .. function:: set_async_timeout(callback, delay)
+
+   Runs the callback on an alternate thread after the given delay (in
+   milliseconds).
 
 .. function:: status_message(string)
 
+   Sets the message that appears in the status bar.
+
 .. function:: error_message(string)
 
+   Displays an error dialog to the user.
+
 .. function:: message_dialog(string)
+
+   Displays a message dialog to the user.
 
 .. function:: ok_cancel_dialog(string, <ok_button>)
 
@@ -70,6 +83,8 @@
 
 .. function:: save_settings(base_name)
 
+   Flushes any in-memory changes to the named settings object to disk.
+
 .. function:: windows()
 
    Returns a list of all the open windows.
@@ -109,6 +124,8 @@
 
 .. function:: set_clipboard(string)
 
+   Sets the contents of the clipboard.
+
 .. function:: score_selector(scope, selector)
 
    Matches the selector against the given scope, returning a score. A score
@@ -120,11 +137,22 @@
 
 .. function:: run_command(string, <args>)
 
+   Runs the named ApplicationCommand with the (optional) given arguments.
+
 .. function:: log_commands(flag)
+
+   Controls command logging. If enabled, all commands run from key bindings and
+   the menu will be logged to the console.
 
 .. function:: log_input(flag)
 
+   Controls input logging. If enabled, all key presses will be logged to
+   the console.
+
 .. function:: log_result_regex(flag)
+
+   Controls result regex logging. This is useful for debugging regular expressions used
+   in build systems.
 
 .. function:: version()
 
