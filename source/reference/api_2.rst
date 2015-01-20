@@ -101,7 +101,7 @@ Sublime Text Python API
 
    .. method:: installed_packages_path()
 
-      Returns the path where all the user's *.sublime-package files are.
+      Returns the path where all the user's *.sublime-package* files are.
 
       :rtype: String
 
