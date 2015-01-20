@@ -1,184 +1,174 @@
+=======================
+Sublime Text Python API
+=======================
 
+.. class:: sublime
 
-.. module:: sublime
+   .. method:: set_timeout(callback, delay)
 
-.. function:: Methods
+      Runs the callback in the main thread after the given delay (in
+      milliseconds). Callbacks with an equal delay will be run in the order
+      they were added.
 
-   Description
+   .. method:: set_async_timeout(callback, delay)
 
-   :rtype: Return Value
+      Runs the callback on an alternate thread after the given delay (in
+      milliseconds).
 
-.. function:: set_timeout(callback, delay)
+   .. method:: status_message(string)
 
-   Runs the callback in the main thread after the given delay (in
-   milliseconds). Callbacks with an equal delay will be run in the order
-   they were added.
+      Sets the message that appears in the status bar.
 
-.. function:: set_async_timeout(callback, delay)
+   .. method:: error_message(string)
 
-   Runs the callback on an alternate thread after the given delay (in
-   milliseconds).
+      Displays an error dialog to the user.
 
-.. function:: status_message(string)
+   .. method:: message_dialog(string)
 
-   Sets the message that appears in the status bar.
+      Displays a message dialog to the user.
 
-.. function:: error_message(string)
+   .. method:: ok_cancel_dialog(string, <ok_button>)
 
-   Displays an error dialog to the user.
+      Displays an ok / cancel question dialog to the user. If ok_button
+      is provided, this may be used as the text on the ok
+      button. Returns True if the user presses the ok button.
 
-.. function:: message_dialog(string)
+      :rtype: bool
 
-   Displays a message dialog to the user.
+   .. method:: load_resource(name)
 
-.. function:: ok_cancel_dialog(string, <ok_button>)
+      Loads the given resource. The name should be in the format Packages/Default/Main.sublime-menu.
 
-   Displays an ok / cancel question dialog to the user. If ok_button
-   is provided, this may be used as the text on the ok
-   button. Returns True if the user presses the ok button.
+      :rtype: String
 
-   :rtype: bool
+   .. method:: load_binary_resource(name)
 
-.. function:: load_resource(name)
+      Loads the given resource. The name should be in the format Packages/Default/Main.sublime-menu.
 
-   Loads the given resource. The name should be in the format Packages/Default/Main.sublime-menu.
+      :rtype: bytes
 
-   :rtype: String
+   .. method:: find_resources(pattern)
 
-.. function:: load_binary_resource(name)
+      Finds resources whose file name matches the given pattern.
 
-   Loads the given resource. The name should be in the format Packages/Default/Main.sublime-menu.
+      :rtype: [String]
 
-   :rtype: bytes
+   .. method:: encode_value(value, <pretty>)
 
-.. function:: find_resources(pattern)
+      Encode a JSON compatible value into a string representation. If pretty is
+      set to True, the string will include newlines and indentation.
 
-   Finds resources whose file name matches the given pattern.
+      :rtype: String
 
-   :rtype: [String]
+   .. method:: decode_value(string)
 
-.. function:: encode_value(value, <pretty>)
+      Decodes a JSON string into an object. If the string is invalid,
+      a ValueError will be thrown.
 
-   Encode a JSON compatible value into a string representation. If pretty is
-   set to True, the string will include newlines and indentation.
+      :rtype: value
 
-   :rtype: String
+   .. method:: load_settings(base_name)
 
-.. function:: decode_value(string)
+      Loads the named settings. The name should include a file name and
+      extension, but not a path. The packages will be searched for files
+      matching the base name, and the results will be collated into the
+      settings object. Subsequent calls to load_settings with the name base_name will return
+      the same object, and not load the settings from disk again.
 
-   Decodes a JSON string into an object. If the string is invalid,
-   a ValueError will be thrown.
+      :rtype: Settings
 
-   :rtype: value
+   .. method:: save_settings(base_name)
 
-.. function:: load_settings(base_name)
+      Flushes any in-memory changes to the named settings object to disk.
 
-   Loads the named settings. The name should include a file name and
-   extension, but not a path. The packages will be searched for files
-   matching the base name, and the results will be collated into the
-   settings object. Subsequent calls to load_settings with the name base_name will return
-   the same object, and not load the settings from disk again.
+   .. method:: windows()
 
-   :rtype: Settings
+      Returns a list of all the open windows.
 
-.. function:: save_settings(base_name)
+      :rtype: [Window]
 
-   Flushes any in-memory changes to the named settings object to disk.
+   .. method:: active_window()
 
-.. function:: windows()
+      Returns the most recently used window.
 
-   Returns a list of all the open windows.
+      :rtype: Window
 
-   :rtype: [Window]
+   .. method:: packages_path()
 
-.. function:: active_window()
+      Returns the base path to the packages.
 
-   Returns the most recently used window.
+      :rtype: String
 
-   :rtype: Window
+   .. method:: installed_packages_path()
 
-.. function:: packages_path()
+      Returns the path where all the user's *.sublime-package files are.
 
-   Returns the base path to the packages.
+      :rtype: String
 
-   :rtype: String
+   .. method:: cache_path()
 
-.. function:: installed_packages_path()
+      Returns the path where Sublime Text stores cache files.
 
-   Returns the path where all the user's *.sublime-package files are.
+      :rtype: String
 
-   :rtype: String
+   .. method:: get_clipboard(<size_limit>)
 
-.. function:: cache_path()
+      Returns the contents of the clipboard. size_limit is there to protect against
+      unnecessarily large data, defaults to 16,777,216 characters
 
-   Returns the path where Sublime Text stores cache files.
+      :rtype: String
 
-   :rtype: String
+   .. method:: set_clipboard(string)
 
-.. function:: get_clipboard(<size_limit>)
+      Sets the contents of the clipboard.
 
-   Returns the contents of the clipboard. size_limit is there to protect against
-   unnecessarily large data, defaults to 16,777,216 characters
+   .. method:: score_selector(scope, selector)
 
-   :rtype: String
+      Matches the selector against the given scope, returning a score. A score
+      of 0 means no match, above 0 means a match. Different selectors
+      may be compared against the same scope: a higher score means the
+      selector is a better match for the scope.
 
-.. function:: set_clipboard(string)
+      :rtype: Int
 
-   Sets the contents of the clipboard.
+   .. method:: run_command(string, <args>)
 
-.. function:: score_selector(scope, selector)
+      Runs the named ApplicationCommand with the (optional) given arguments.
 
-   Matches the selector against the given scope, returning a score. A score
-   of 0 means no match, above 0 means a match. Different selectors
-   may be compared against the same scope: a higher score means the
-   selector is a better match for the scope.
+   .. method:: log_commands(flag)
 
-   :rtype: Int
+      Controls command logging. If enabled, all commands run from key bindings and
+      the menu will be logged to the console.
 
-.. function:: run_command(string, <args>)
+   .. method:: log_input(flag)
 
-   Runs the named ApplicationCommand with the (optional) given arguments.
+      Controls input logging. If enabled, all key presses will be logged to
+      the console.
 
-.. function:: log_commands(flag)
+   .. method:: log_result_regex(flag)
 
-   Controls command logging. If enabled, all commands run from key bindings and
-   the menu will be logged to the console.
+      Controls result regex logging. This is useful for debugging regular expressions used
+      in build systems.
 
-.. function:: log_input(flag)
+   .. method:: version()
 
-   Controls input logging. If enabled, all key presses will be logged to
-   the console.
+      Returns the version number
 
-.. function:: log_result_regex(flag)
+      :rtype: String
 
-   Controls result regex logging. This is useful for debugging regular expressions used
-   in build systems.
+   .. method:: platform()
 
-.. function:: version()
+      Returns the platform, which may be "osx", "linux" or "windows"
 
-   Returns the version number
+      :rtype: String
 
-   :rtype: String
+   .. method:: arch()
 
-.. function:: platform()
+      Returns the CPU architecture, which may be "x32" or "x64"
 
-   Returns the platform, which may be "osx", "linux" or "windows"
-
-   :rtype: String
-
-.. function:: arch()
-
-   Returns the CPU architecture, which may be "x32" or "x64"
-
-   :rtype: String
+      :rtype: String
 
 .. class:: sublime.View
-
-   .. method:: Methods
-
-      Description
-
-      :rtype: Return Value
 
    .. method:: id()
 
@@ -344,7 +334,17 @@
    .. method:: classify(point)
 
       Classifies pt, returning a bitwise OR of zero or more of these
-      flags: CLASS_WORD_START CLASS_WORD_END CLASS_PUNCTUATION_START CLASS_PUNCTUATION_END CLASS_SUB_WORD_START CLASS_SUB_WORD_END CLASS_LINE_START CLASS_LINE_END CLASS_EMPTY_LINE
+      flags:
+
+         * ``CLASS_WORD_START``
+         * ``CLASS_WORD_END``
+         * ``CLASS_PUNCTUATION_START``
+         * ``CLASS_PUNCTUATION_END``
+         * ``CLASS_SUB_WORD_START``
+         * ``CLASS_SUB_WORD_END``
+         * ``CLASS_LINE_START``
+         * ``CLASS_LINE_END``
+         * ``CLASS_EMPTY_LINE``
 
       :rtype: int
 
@@ -608,12 +608,6 @@
 
 .. class:: sublime.Selection
 
-   .. method:: Methods
-
-      Description
-
-      :rtype: Return Value
-
    .. method:: clear()
 
    .. method:: add(region)
@@ -642,20 +636,6 @@
 
       :rtype: Creates a Region with initial values a and b.
 
-.. class:: sublime.Edit
-
-   .. method:: Methods
-
-      Description
-
-      :rtype: Return Value
-
-   .. method:: (no methods)
-
-
-
-      :rtype: 
-
 .. class:: sublime.Window
 
    .. method:: Methods
@@ -683,8 +663,8 @@
       is already opened, it will be brought to the front. Note that
       as file loading is asynchronous, operations on the returned view won't be
       possible until its is_loading() method returns False. The optional flags parameter is
-      a bitwise combination of: sublime.ENCODED_POSITION. Indicates the file_name should be searched for
-      a :row or :row:col suffix sublime.TRANSIENT. Open the file as a preview
+      a bitwise combination of: ``sublime.ENCODED_POSITION``. Indicates the file_name should be searched for
+      a :row or :row:col suffix ``sublime.TRANSIENT``. Open the file as a preview
       only: it won't have a tab assigned it until modified
 
       :rtype: View
@@ -760,32 +740,63 @@
    .. method:: project_data()
 
       Returns the project data associated with the current window. The data is
-      in the same format as the contents of a .sublime-project file. set_project_data(data)NoneUpdates
-      the project data associated with the current window. If the window is
+      in the same format as the contents of a .sublime-project file.
+
+   .. method:: set_project_data(data)
+
+      Updates the project data associated with the current window. If the window is
       associated with a .sublime-project file, the project file will be updated on
-      disk, otherwise the window will store the data internally. run_command(string, <args>)NoneRuns the
-      named Command with the (optional) given arguments. Window.run_command is able to run
-      both any sort of command, dispatching the command via input focus. show_quick_panel(items,
-      on_done, <flags>, <selected_index>, <on_highlighted>)NoneShows a quick panel, to select an item in
-      a list. on_done will be called once, with the index of the
+      disk, otherwise the window will store the data internally.
+
+      :rtype: None
+
+   .. method:: run_command(string, <args>)
+
+      Runs the named Command with the (optional) given arguments. Window.run_command is able to run
+      both any sort of command, dispatching the command via input focus.
+
+      :rtype: None
+
+   .. method:: show_quick_panel(items, on_done, <flags>, <selected_index>, <on_highlighted>)
+
+      Shows a quick panel, to select an item in a list. on_done will be called once, with the index of the
       selected item. If the quick panel was cancelled, on_done will be called
       with an argument of -1. Items may be an array of strings,
       or an array of string arrays. In the latter case, each entry
       in the quick panel will show multiple rows. Flags currently only has
       one option, sublime.MONOSPACE_FONT on_highlighted, if given, will be called every time the
-      highlighted item in the quick panel is changed. show_input_panel(caption, initial_text, on_done, on_change,
-      on_cancel)ViewShows the input panel, to collect a line of input from the
+      highlighted item in the quick panel is changed.
+
+      :rtype: None
+
+   .. method:: show_input_panel(caption, initial_text, on_done, on_change, on_cancel)
+
+      Shows the input panel, to collect a line of input from the
       user. on_done and on_change, if not None, should both be functions that
       expect a single string argument. on_cancel should be a function that expects
-      no arguments. The view used for the input widget is returned. create_output_panel(name)ViewReturns
-      the view associated with the named output panel, created it if required.
+      no arguments. The view used for the input widget is returned.
+
+      :rtype: View
+
+   .. method:: create_output_panel(name)
+
+      Returns the view associated with the named output panel, created it if required.
       The output panel can be shown by running the show_panel window command,
       with the panel argument set to the name with an "output." prefix.
-      lookup_symbol_in_index(symbol)[Location]Returns all locations where the symbol is defined across files in the
-      current project. lookup_symbol_in_open_files(symbol)[Location]Returns all locations where the symbol is defined across open
+
+   .. method:: lookup_symbol_in_index(symbol)
+
+      Returns all locations where the symbol is defined across files in the
+      current project.
+
+      :rtype: [Location]
+
+   .. method:: lookup_symbol_in_open_files(symbol)
+
+      Returns all locations where the symbol is defined across open
       files.
 
-      :rtype: Dictionary
+      :rtype: [Location]
 
    .. method:: set_project_data(data)
 
@@ -807,11 +818,21 @@
       Returns the view associated with the named output panel, created it if
       required. The output panel can be shown by running the show_panel window
       command, with the panel argument set to the name with an "output."
-      prefix. lookup_symbol_in_index(symbol)[Location]Returns all locations where the symbol is defined across files in
-      the current project. lookup_symbol_in_open_files(symbol)[Location]Returns all locations where the symbol is defined across
+      prefix.
+
+   .. method:: lookup_symbol_in_index(symbol)
+
+      Returns all locations where the symbol is defined across files in
+      the current project.
+
+      :rtype: [Location]
+
+   .. method:: lookup_symbol_in_open_files(symbol)
+
+      Returns all locations where the symbol is defined across
       open files.
 
-      :rtype: View
+      :rtype: [Location]
 
    .. method:: lookup_symbol_in_index(symbol)
 
@@ -827,12 +848,6 @@
       :rtype: [Location]
 
 .. class:: sublime.Settings
-
-   .. method:: Methods
-
-      Description
-
-      :rtype: Return Value
 
    .. method:: get(name)
 
@@ -861,27 +876,7 @@
 
    .. method:: clear_on_change(key)
 
-.. module:: sublime_plugin
-
-.. function:: Methods
-
-   Description
-
-   :rtype: Return Value
-
-.. function:: (no methods)
-
-
-
-   :rtype: 
-
 .. class:: sublime_plugin.EventListener
-
-   .. method:: Methods
-
-      Description
-
-      :rtype: Return Value
 
    .. method:: on_new(view)
 
@@ -963,12 +958,6 @@
 
 .. class:: sublime_plugin.ApplicationCommand
 
-   .. method:: Methods
-
-      Description
-
-      :rtype: Return Value
-
    .. method:: run(<args>)
 
    .. method:: is_enabled(<args>)
@@ -1003,12 +992,6 @@
 
 .. class:: sublime_plugin.WindowCommand
 
-   .. method:: Methods
-
-      Description
-
-      :rtype: Return Value
-
    .. method:: run(<args>)
 
    .. method:: is_enabled(<args>)
@@ -1034,12 +1017,6 @@
       :rtype: String
 
 .. class:: sublime_plugin.TextCommand
-
-   .. method:: Methods
-
-      Description
-
-      :rtype: Return Value
 
    .. method:: run(edit, <args>)
 
